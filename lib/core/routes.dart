@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:todo_app_3/application/pages/home/home_page.dart';
 import 'package:todo_app_3/core/app_routes.dart';
 
 final routes = GoRouter(
@@ -8,31 +9,7 @@ final routes = GoRouter(
     GoRoute(
       path: AppRoutes.home,
       builder: (context, state) {
-        return Container(
-          color: Colors.blue,
-          child: Column(
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  context.go(AppRoutes.settings);
-                },
-                child: const Text('Go to settings'),
-              ),
-              Material(
-                child: IconButton(
-                  onPressed: () {
-                    if (context.canPop()) {
-                      context.pop();
-                    } else {
-                      context.go(AppRoutes.settings);
-                    }
-                  },
-                  icon: const Icon(Icons.star),
-                ),
-              )
-            ],
-          ),
-        );
+        return const HomePage();
       },
     ),
     GoRoute(
