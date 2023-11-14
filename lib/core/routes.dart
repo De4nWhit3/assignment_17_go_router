@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_app_3/application/pages/home/home_page.dart';
-import 'package:todo_app_3/core/app_routes.dart';
+
+final GlobalKey<NavigatorState> _rootNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'root');
+
+final GlobalKey<NavigatorState> _shellNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'shell');
+
+class AppRoutes {
+  static const String home = '/home/start';
+  static const String settings = '/home/settings';
+}
 
 final routes = GoRouter(
-  initialLocation: AppRoutes.settings,
+  navigatorKey: _rootNavigatorKey,
+  initialLocation: AppRoutes.home,
   routes: [
-    GoRoute(
-      path: AppRoutes.home,
-      builder: (context, state) {
-        return const HomePage();
-      },
-    ),
     GoRoute(
       path: AppRoutes.settings,
       builder: (context, state) {
@@ -21,22 +26,48 @@ final routes = GoRouter(
             children: [
               ElevatedButton(
                 onPressed: () {
-                  context.go(AppRoutes.home);
+                  context.push(AppRoutes.home);
                 },
-                child: const Text('Go to home'),
+                child: const Text('Go to start'),
               ),
-              Material(
-                child: IconButton(
-                  onPressed: () {
-                    if (context.canPop()) {
-                      context.pop();
-                    } else {
-                      context.go(AppRoutes.home);
-                    }
-                  },
-                  icon: const Icon(Icons.heart_broken),
-                ),
-              )
+              TextButton(
+                onPressed: () {
+                  if (context.canPop()) {
+                    context.pop();
+                  } else {
+                    context.push(AppRoutes.home);
+                  }
+                },
+                child: const Text('Go home'),
+              ),
+            ],
+          ),
+        );
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.home,
+      builder: (context, state) {
+        return Container(
+          color: Colors.blue,
+          child: Column(
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  context.push(AppRoutes.settings);
+                },
+                child: const Text('Go to settings'),
+              ),
+              TextButton(
+                onPressed: () {
+                  if (context.canPop()) {
+                    context.pop();
+                  } else {
+                    context.push(AppRoutes.settings);
+                  }
+                },
+                child: const Text('Go settings'),
+              ),
             ],
           ),
         );

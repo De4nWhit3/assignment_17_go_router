@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
+import 'package:go_router/go_router.dart';
 import 'package:todo_app_3/application/pages/dashboard/dashboard_page.dart';
 import 'package:todo_app_3/application/pages/overview/overview_page.dart';
+import 'package:todo_app_3/core/routes.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  HomePage({
+    super.key,
+    required String tab,
+  }) : index = tabs.indexWhere((element) => element.name == tab);
+
+  final int index;
 
   static const tabs = [
     DashboardPage.pageConfig,
@@ -36,10 +43,13 @@ class _HomePageState extends State<HomePage> {
                 key: const Key('primary-navigation-medium'),
                 builder: (context) {
                   return AdaptiveScaffold.standardNavigationRail(
-                      destinations: destinations
-                          .map((element) =>
-                              AdaptiveScaffold.toRailDestination(element))
-                          .toList());
+                    destinations: destinations
+                        .map((element) =>
+                            AdaptiveScaffold.toRailDestination(element))
+                        .toList(),
+                    onDestinationSelected: (index) =>
+                        _tapOnNavigationDestination(context, index),
+                  );
                 },
               )
             },
@@ -50,7 +60,10 @@ class _HomePageState extends State<HomePage> {
                 key: const Key('bottom-nav-small'),
                 builder: (context) {
                   return AdaptiveScaffold.standardBottomNavigationBar(
-                      destinations: destinations);
+                    destinations: destinations,
+                    onDestinationSelected: (value) =>
+                        _tapOnNavigationDestination(context, value),
+                  );
                 },
               ),
             },
@@ -75,4 +88,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  void _tapOnNavigationDestination(BuildContext context, int index) =>
+      context.go('${AppRoutes.home}/${HomePage.tabs[index].name}');
 }
