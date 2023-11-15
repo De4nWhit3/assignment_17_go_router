@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:todo_app_3/application/app/pages/home/home_page.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -8,7 +9,7 @@ final GlobalKey<NavigatorState> _shellNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'shell');
 
 class AppRoutes {
-  static const String home = '/home/start';
+  static const String home = '/home';
   static const String settings = '/home/settings';
 }
 
@@ -47,29 +48,7 @@ final routes = GoRouter(
     GoRoute(
       path: AppRoutes.home,
       builder: (context, state) {
-        return Container(
-          color: Colors.blue,
-          child: Column(
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  context.push(AppRoutes.settings);
-                },
-                child: const Text('Go to settings'),
-              ),
-              TextButton(
-                onPressed: () {
-                  if (context.canPop()) {
-                    context.pop();
-                  } else {
-                    context.push(AppRoutes.settings);
-                  }
-                },
-                child: const Text('Go settings'),
-              ),
-            ],
-          ),
-        );
+        return const HomePage();
       },
     ),
   ],
