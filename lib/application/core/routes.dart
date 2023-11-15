@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_app_3/application/app/pages/home/home_page.dart';
+import 'package:todo_app_3/application/app/pages/settings/settings_page.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -15,35 +16,11 @@ class AppRoutes {
 
 final routes = GoRouter(
   navigatorKey: _rootNavigatorKey,
-  initialLocation: AppRoutes.home,
+  initialLocation: '${AppRoutes.home}/dashboard',
   routes: [
     GoRoute(
       path: AppRoutes.settings,
-      builder: (context, state) {
-        return Container(
-          color: Colors.amber,
-          child: Column(
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  context.push(AppRoutes.home);
-                },
-                child: const Text('Go to start'),
-              ),
-              TextButton(
-                onPressed: () {
-                  if (context.canPop()) {
-                    context.pop();
-                  } else {
-                    context.push(AppRoutes.home);
-                  }
-                },
-                child: const Text('Go home'),
-              ),
-            ],
-          ),
-        );
-      },
+      builder: (context, state) => const SettingsPage(),
     ),
     ShellRoute(
       navigatorKey: _shellNavigatorKey,

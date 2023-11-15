@@ -13,6 +13,7 @@ class HomePage extends StatefulWidget {
 
   final int index;
 
+  //  list of all tabs to display in nav bar
   static const tabs = [
     DashboardPage.pageConfig,
     OverviewPage.pageConfig,
@@ -34,6 +35,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       body: SafeArea(
         child: AdaptiveLayout(
@@ -41,6 +44,16 @@ class _HomePageState extends State<HomePage> {
             Breakpoints.mediumAndUp: SlotLayout.from(
               key: const Key('primary-navigation-medium'),
               builder: (context) => AdaptiveScaffold.standardNavigationRail(
+                // ! Use ThemeService instead of doing this
+                selectedLabelTextStyle: TextStyle(
+                  color: theme.colorScheme.onBackground,
+                ),
+                selectedIconTheme:
+                    IconThemeData(color: theme.colorScheme.onBackground),
+                unselectedIconTheme: IconThemeData(
+                  color: theme.colorScheme.onBackground.withOpacity(.5),
+                ),
+                // TODO Ignore todo, just for orange, end of ThemeService comment
                 selectedIndex: widget.index,
                 destinations: destinations
                     .map((element) =>
