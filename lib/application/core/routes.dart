@@ -45,11 +45,18 @@ final routes = GoRouter(
         );
       },
     ),
-    GoRoute(
-      path: AppRoutes.home,
-      builder: (context, state) {
-        return const HomePage();
-      },
+    ShellRoute(
+      navigatorKey: _shellNavigatorKey,
+      builder: (context, state, child) => child,
+      routes: [
+        GoRoute(
+          path: '${AppRoutes.home}/:tab',
+          builder: (context, state) => HomePage(
+            key: state.pageKey,
+            tab: state.pathParameters['tab'] ?? 'dashboard',
+          ),
+        ),
+      ],
     ),
   ],
 );
