@@ -41,6 +41,7 @@ class _HomePageState extends State<HomePage> {
             Breakpoints.mediumAndUp: SlotLayout.from(
               key: const Key('primary-navigation-medium'),
               builder: (context) => AdaptiveScaffold.standardNavigationRail(
+                selectedIndex: widget.index,
                 destinations: destinations
                     .map((element) =>
                         AdaptiveScaffold.toRailDestination(element))
@@ -55,6 +56,7 @@ class _HomePageState extends State<HomePage> {
               key: const Key('bottom-navigation-small'),
               builder: (context) =>
                   AdaptiveScaffold.standardBottomNavigationBar(
+                currentIndex: widget.index,
                 destinations: destinations,
                 onDestinationSelected: (index) =>
                     _tapOnNavigationDestination(context, index),
