@@ -64,13 +64,13 @@ class _HomePageState extends State<HomePage> {
           body: SlotLayout(config: <Breakpoint, SlotLayoutConfig>{
             Breakpoints.smallAndUp: SlotLayout.from(
               key: const Key('primary-body'),
-              builder: (context) => const Placeholder(),
+              builder: (context) => HomePage.tabs[widget.index].child,
             ),
           }),
           secondaryBody: SlotLayout(config: <Breakpoint, SlotLayoutConfig>{
             Breakpoints.mediumAndUp: SlotLayout.from(
               key: const Key('secondary-body'),
-              builder: (context) => const Placeholder(),
+              builder: AdaptiveScaffold.emptyBuilder,
             ),
           }),
         ),
